@@ -2,3 +2,4 @@ node_modules/
 connectionstring.txt
 populatedb.js
 app.js
+.env
