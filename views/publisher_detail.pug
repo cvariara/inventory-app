@@ -1,0 +1,20 @@
+extends layout 
+
+block content 
+  h1= title
+  p Founded: #{publisher.date_of_birth_formatted}
+
+  div(class="publisher-container")
+    div(class="publisher-image-container")
+      img(src=`${publisher.image}`, alt="" class="publisher-container-image")
+    div(class="publisher-information")
+      if publisher_games.length
+        div(class="publisher-games")
+          each game in publisher_games
+            div(class="publisher-game")
+              a(href=game.url)
+                img(src=`${game.imgurl}`, alt="" class="game-image-sm")
+              a(href=game.url) #{game.title}
+
+      else
+        p This publisher has no games listed.

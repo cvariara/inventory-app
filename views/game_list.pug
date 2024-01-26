@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  if game_list.length 
+    div(class="games")
+      each game in game_list 
+        div(class="game")
+          a(href=game.url)
+            img(src=`${game.imgurl}`, alt="" class="game-image")
+          div(class="game-info")
+            div(class="game-title")
+              a(href=game.url) #{game.title}
+            div(class="game-publisher")
+              a(href=game.publisher.url) #{game.publisher.name}
+  else 
+    p There are no games.

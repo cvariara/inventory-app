@@ -1,0 +1,15 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  if publisher_list.length 
+    div(class="publishers")
+      each publisher in publisher_list 
+        div(class="publisher")
+          a(href=publisher.url)
+            img(src=`${publisher.image}`, alt="" class="publisher-image")
+          div(class="publisher-info")
+            a(href=publisher.url) #{publisher.name}
+  else 
+    p There are no publishers.

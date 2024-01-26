@@ -6,12 +6,36 @@ const asyncHandler = require("express-async-handler");
 
 // Display list of all genres
 exports.genre_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: genre List");
+  const allGenres = await Genre.find()
+    .collation({ locale: 'en', strength: 2 })
+    .sort({ name: 1 })
+    .exec();
+
+  res.render("genre_list", {
+    title: "List of Genres",
+    genre_list: allGenres
+  });
 });
 
 // Display detail page for a specific genre
 exports.genre_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: genre detail: ${req.params.id}`);
+  const [genre, allGamesInGenre] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    Game.find({ genre: req.params.id }, "title image").exec()
+  ]);
+
+  if (genre === null) {
+    // No results.
+    const err = new Error("Genre not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("genre_detail", {
+    title: genre.name,
+    genre: genre,
+    genre_games: allGamesInGenre
+  });
 });
 
 // Display book create form on GET

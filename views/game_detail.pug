@@ -1,0 +1,22 @@
+extends layout 
+
+block content 
+  h1= title
+
+  div(class="game-container")
+    div(class="game-image-container")
+      img(src=`${game.imgurl}`, alt="" class="game-container-image")
+    div(class="game-information")
+      p #[strong Publisher: ]
+        a(href=game.publisher.url) #{game.publisher.name}
+      p #[strong Genre: ]
+        each val, index in game.genre
+          a(href=val.url) #{val.name}
+          if index < game.genre.length - 1
+            |,&nbsp; 
+      p #[strong Release Date: ] #{game.release_date_formatted}
+
+  p(class="margin")
+    a(href=game.url+'/update') Update Game
+  p
+    a(href=game.url+'/delete') Delete Game
